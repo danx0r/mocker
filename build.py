@@ -11,7 +11,7 @@ skip = False
 for r in f.readlines():
     r = r.strip()
     if skip:
-        print ("PSEUDO SKIP |", r)
+        print ("SKIP |", r)
         skip = False
         continue
     if r[:9] == "#PSEUDO: ":
@@ -21,7 +21,7 @@ for r in f.readlines():
         else:
             skip = False
             cmd = r[9:]
-            print ("PSEUDO DO |", cmd)
+            print ("DO   |", cmd)
             if cmd [:3] == 'cd ':
                 os.chdir(cmd[3:])
             else:
@@ -33,8 +33,15 @@ for r in f.readlines():
         if cmd[:3] == 'apt':
            cmd = f"sudo bash -c '{cmd}'"
         if key == 'RUN':
-            print ("PSEUDO DO |", cmd)
+            print ("DO   |", cmd)
             do(cmd)
+        elif key == "ENV":
+            i = cmd.find('=')
+            var = cmd[:i]
+            val = cmd[i+1:]
+            val = os.path.expandvars(val)
+            print (f"SET  | {var}={val}")
+            os.environ[var]=val
         else:
-            print ("PSEUDO SKIP |", r)
+            print ("SKIP |", r)
 f.close()
