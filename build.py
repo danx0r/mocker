@@ -43,7 +43,7 @@ for r in f.readlines():
             print (f"MOCKER SET  | {var}={val}")
             os.environ[var]=val
         elif key == 'WORKDIR':
-            print("PSEUDO cd   |", cmd)
+            print("MOCKER cd   |", cmd)
             os.chdir(cmd)
         else:
             print ("MOCKER SKIP |", r)
