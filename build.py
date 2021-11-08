@@ -42,6 +42,9 @@ for r in f.readlines():
             val = os.path.expandvars(val)
             print (f"MOCKER SET  | {var}={val}")
             os.environ[var]=val
+        elif key == 'WORKDIR':
+            print("PSEUDO cd   |", cmd)
+            os.chdir(cmd)
         else:
             print ("MOCKER SKIP |", r)
 f.close()
